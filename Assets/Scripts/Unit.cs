@@ -1,24 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class Unit : MonoBehaviour
+public abstract class Unit : MonoBehaviour
 {
-    public float speed { get; private set; }
-    public float energy;
-    public bool isWorking;
-    public bool isEating;
-    public bool isMoving;
-    public bool isResting;
-    public float workEfficency;
-    public float experience;
-    private float food;
+    protected float speed { get; private set; }
+    protected float energy;
+    protected bool isWorking;
+    protected bool isEating;
+    protected bool isMoving;
+    protected bool isResting;
+    protected bool isSelected;
+    protected float workEfficency;
+    protected float experience;
+    protected Camp camp;
 
-    
+
     // Start is called before the first frame update
-    void Start()
+    protected void Awake()
     {
-        
+        camp = FindObjectOfType<Camp>();
+        experience = 0;
+        energy = 100;
     }
 
     // Update is called once per frame
@@ -38,6 +42,7 @@ public class Unit : MonoBehaviour
         {
             energy--;
             yield return new WaitForSeconds(5);
+            Debug.Log(energy);
         }
         while (energy > 0 && isMoving)
         {
@@ -47,20 +52,18 @@ public class Unit : MonoBehaviour
     }
     IEnumerator EatingInCamp()
     {
-        while (energy < 100 && food > 0)
+        while (energy < 100 && camp.food > 0)
         {
             energy += 5;
-            food--;
+            camp.food--;
             yield return new WaitForSeconds(2.5f);
         }
-        if (energy < 100 && food == 0)
+        if (energy < 100 && camp.food == 0)
         {
             isEating = false;
             isResting = true;
         }
     }
-    public virtual void Working()
-    {
-        workEfficency = experience * 1;
-    }
+    public abstract void Working();
+    
 }

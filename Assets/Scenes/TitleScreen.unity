@@ -519,7 +519,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 251951437}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1861846600}
+        m_TargetAssemblyTypeName: TitleUI, Assembly-CSharp
+        m_MethodName: ExitGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &251951437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -776,7 +788,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 771055116}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1861846600}
+        m_TargetAssemblyTypeName: TitleUI, Assembly-CSharp
+        m_MethodName: StartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &771055116
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -891,6 +915,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1050288222}
   m_CullTransparentMesh: 1
+--- !u!1 &1282032886
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1282032888}
+  - component: {fileID: 1282032887}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1282032887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1282032886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cdac8efc6034ae49be269e88251f6df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hasStartedGame: 0
+--- !u!4 &1282032888
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1282032886}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 497.38632, y: 190.13928, z: 4.1892414}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1303989424
 GameObject:
   m_ObjectHideFlags: 0
@@ -1106,6 +1175,7 @@ GameObject:
   - component: {fileID: 1861846598}
   - component: {fileID: 1861846597}
   - component: {fileID: 1861846596}
+  - component: {fileID: 1861846600}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1199,6 +1269,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1861846600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1861846595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed5589bad9ef8ab4591d0958a2e8eb25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menuCamera: {fileID: 185766104}
+  resumeButton: {fileID: 1867514076}
 --- !u!1 &1867514074
 GameObject:
   m_ObjectHideFlags: 0
@@ -1282,7 +1366,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1867514077}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1861846600}
+        m_TargetAssemblyTypeName: TitleUI, Assembly-CSharp
+        m_MethodName: ResumeGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1867514077
 MonoBehaviour:
   m_ObjectHideFlags: 0

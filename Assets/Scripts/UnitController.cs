@@ -11,22 +11,25 @@ public class UnitController : MonoBehaviour
     public float speed;
     public Unit selectedUnit;
     public GameObject indicator;
+    private GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
         _camera = GetComponent<Camera>();
         indicator.SetActive(false);
+        gameManager = FindObjectOfType<GameManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        CheckGameStatus();
+        if (Input.GetMouseButtonDown(0) && !gameManager.isPaused)
         {
             HandleSelection();
         }
-        if (Input.GetMouseButtonUp(1) && selectedUnit != null)
+        if (Input.GetMouseButtonUp(1) && selectedUnit != null && !gameManager.isPaused)
         {
             HandleAction();
         }
@@ -69,6 +72,13 @@ public class UnitController : MonoBehaviour
             {
                 Debug.Log("Your troop will move with haste!");
             }
+        }
+    }
+    void CheckGameStatus()
+    {
+        if (gameManager.isPaused)
+        {
+            _camera.gameObject.SetActive(false);
         }
     }
 }

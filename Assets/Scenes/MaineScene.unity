@@ -252,6 +252,7 @@ MonoBehaviour:
   movmentSpeed: 40
   rotationSpeed: 15
   bounds: 10
+  gameCamera: {fileID: 963194227}
 --- !u!4 &242964986
 Transform:
   m_ObjectHideFlags: 0

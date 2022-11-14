@@ -2,17 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CameraMovment : MonoBehaviour
 {
     [SerializeField] float movmentSpeed;
     [SerializeField] float rotationSpeed;
     [SerializeField] float bounds;
+    [SerializeField] Camera gameCamera;
+    private GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        gameManager = FindObjectOfType<GameManager>();
     }
 
     // Update is called once per frame
@@ -24,6 +27,12 @@ public class CameraMovment : MonoBehaviour
         {
             CamReset();
         }
+        if (Input.GetKeyDown(KeyCode.Escape) && !gameManager.isPaused)
+        {
+            GoToMenu();
+        }
+        GamePaused();
+        
     }
     private void LateUpdate()
     {
@@ -88,5 +97,24 @@ public class CameraMovment : MonoBehaviour
     {
         transform.position = new Vector3(0, 0, 0);
         transform.rotation = Quaternion.Euler(0, 0, 0);
+    }
+    void GoToMenu()
+    {
+        SceneManager.LoadScene(0, LoadSceneMode.Additive);
+    }
+    void GamePaused()
+    {
+        if (SceneManager.sceneCount > 1)
+        {
+            gameManager.isPaused = true;
+        }
+        else
+        {
+            gameManager.isPaused = false;
+        }
+        if (!gameManager.isPaused)
+        {
+            gameCamera.gameObject.SetActive(true);
+        }
     }
 }

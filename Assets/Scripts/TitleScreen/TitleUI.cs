@@ -10,14 +10,14 @@ using UnityEngine.UI;
 
 public class TitleUI : MonoBehaviour
 {
-    private GameManager gameManager;
     [SerializeField] Button resumeButton;
+    [SerializeField] Button saveButton;
     // Start is called before the first frame update
     void Start()
     {
-        gameManager = FindObjectOfType<GameManager>();
-        resumeButton.GetComponent<Button>().interactable = false;
-        if (gameManager.hasStartedGame)
+        resumeButton.interactable = false;
+        saveButton.interactable = false;
+        if (GameManager.instance.hasStartedGame)
         {
             SetPauseMenu();
         }
@@ -30,12 +30,13 @@ public class TitleUI : MonoBehaviour
     }
     public void StartGame()
     {
+        SaveManager.Instance.NewGame();
         SceneManager.LoadScene(1);
-        gameManager.hasStartedGame = true;
+        GameManager.instance.hasStartedGame = true;
     }
     public void ResumeGame()
     {
-        gameManager.isPaused = false;
+        GameManager.instance.isPaused = false;
         SceneManager.UnloadSceneAsync(0);
     }
     public void ExitGame()
@@ -46,8 +47,17 @@ public class TitleUI : MonoBehaviour
         Application.Quit();
 #endif
     }
+    public void SaveGame()
+    {
+        SaveManager.Instance.SaveGame();
+    }
+    public void LoadGame()
+    {
+        SaveManager.Instance.LoadGame();
+    }
     private void SetPauseMenu()
     {
         resumeButton.interactable = true;
+        saveButton.interactable = true;
     }
 }

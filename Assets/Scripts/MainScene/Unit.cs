@@ -6,59 +6,58 @@ using UnityEngine;
 public abstract class Unit : MonoBehaviour
 {
     protected float speed { get; private set; }
-    protected float energy;
-    protected bool isWorking;
+    public float energy;
+    public bool isWorking;
     protected bool isEating;
-    protected bool isMoving;
     protected bool isResting;
     protected bool isSelected;
     protected float workEfficency;
-    protected float experience;
-    protected Camp camp;
+    public float experience;
 
 
     // Start is called before the first frame update
     protected void Awake()
     {
-        camp = FindObjectOfType<Camp>();
         experience = 0;
         energy = 100;
     }
-
-    // Update is called once per frame
-    void Update()
+    public void Start()
     {
         StartCoroutine(EnergyDepletion());
-        if (isEating)
-        {
-            StartCoroutine(EatingInCamp());
-        }
+        StartCoroutine(EatingInCamp());
+    }
+
+    // Update is called once per frame
+    public void Update()
+    {
         if (isWorking)
-        Working();
+        {
+            Working();
+        }
+        if (energy == 0)
+        {
+            isWorking = false;
+        }
     }
     IEnumerator EnergyDepletion()
     {
         while (energy > 0 && isWorking)
         {
             energy--;
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(1);
             Debug.Log(energy);
         }
-        while (energy > 0 && isMoving)
-        {
-            energy--;
-            yield return new WaitForSeconds(10);
-        }
+        
     }
     IEnumerator EatingInCamp()
     {
-        while (energy < 100 && camp.food > 0)
+        while (energy < 100 && GameManager.instance.food > 0 && isEating)
         {
             energy += 5;
-            camp.food--;
+            GameManager.instance.food--;
             yield return new WaitForSeconds(2.5f);
         }
-        if (energy < 100 && camp.food == 0)
+        if (energy < 100 && GameManager.instance.food == 0 && isEating)
         {
             isEating = false;
             isResting = true;

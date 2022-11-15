@@ -2,21 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasicUnit : Unit
+public class CookUnit : Unit
 {
+    
     // Start is called before the first frame update
-    void Start()
+    new void Start()
     {
-        
+        isWorking = true;
     }
-
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
+ 
     public override void Working()
     {
-        camp.milk++;
+        GameManager.instance.food++;
     }
 }

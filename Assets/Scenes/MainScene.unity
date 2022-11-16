@@ -412,9 +412,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00f35aa163072864b8514427e856578b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defense: 0
-  food: 0
-  milk: 0
 --- !u!1 &611495680
 GameObject:
   m_ObjectHideFlags: 0
@@ -724,6 +721,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UnitSoldier
       objectReference: {fileID: 0}
+    - target: {fileID: 8988924620704620628, guid: 48f267012ae8ed647b3b29439463616f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8988924620704620631, guid: 48f267012ae8ed647b3b29439463616f, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -882,6 +883,10 @@ PrefabInstance:
     - target: {fileID: 1673713845454008593, guid: 7074b7ccabfffe140ad69f89e3b06fe9, type: 3}
       propertyPath: m_Name
       value: UnitCook
+      objectReference: {fileID: 0}
+    - target: {fileID: 1673713845454008593, guid: 7074b7ccabfffe140ad69f89e3b06fe9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1673713845454008594, guid: 7074b7ccabfffe140ad69f89e3b06fe9, type: 3}
       propertyPath: m_RootOrder

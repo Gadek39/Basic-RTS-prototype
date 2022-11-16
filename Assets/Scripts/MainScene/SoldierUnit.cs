@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class SoldierUnit : Unit
 {
-    
-    // Start is called before the first frame update
-
-    // Update is called once per frame
-    
+    protected float basicDefense = 5;
     public override void Working()
     {
-        GameManager.instance.shield += 5;
+        StartCoroutine(OnGuard(basicDefense + workEfficency));
+    }
+    IEnumerator OnGuard(float protectionRate)
+    {
+        GameManager.instance.shield += protectionRate;
+        yield return null;
     }
 }

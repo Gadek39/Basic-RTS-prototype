@@ -17,36 +17,9 @@ public class Camp : MonoBehaviour
         {
             showInventoryStatus();
         }
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            AddToInventory(1);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            AddToInventory(2);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            AddToInventory(3);
-        }
     }
     void showInventoryStatus()
     {
         Debug.Log("Current resources:\nMilk - " + GameManager.instance.milk + "\nFood - " + GameManager.instance.food + "\nSafety - " + GameManager.instance.shield);
-    }
-    void AddToInventory(int type)
-    {
-        if (type == 1)
-        {
-            GameManager.instance.milk++;
-        }
-        else if (type == 2)
-        {
-            GameManager.instance.food++;
-        }
-        else if (type == 3)
-        {
-            GameManager.instance.shield++;
-        }
     }
 }

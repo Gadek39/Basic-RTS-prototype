@@ -8,12 +8,17 @@ public class CookUnit : Unit
     // Start is called before the first frame update
     new void Start()
     {
-        isWorking = true;
+
     }
     // Update is called once per frame
  
     public override void Working()
     {
-        GameManager.instance.food++;
+        StartCoroutine(CookingStuff(workEfficency, arbitraryRateNumber));
+    }
+    IEnumerator CookingStuff(float productionRate, float productionSpeed)
+    {
+        GameManager.instance.food += productionRate;
+        yield return new WaitForSeconds(productionSpeed);
     }
 }

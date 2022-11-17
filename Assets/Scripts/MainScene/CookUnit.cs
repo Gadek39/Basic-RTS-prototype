@@ -14,11 +14,16 @@ public class CookUnit : Unit
  
     public override void Working()
     {
-        StartCoroutine(CookingStuff(workEfficency, arbitraryRateNumber));
+        if (!startedWorking)
+        {
+            StartCoroutine(CookingStuff(workEfficency, arbitraryRateNumber));
+        }
     }
     IEnumerator CookingStuff(float productionRate, float productionSpeed)
     {
+        startedWorking = true;
         GameManager.instance.food += productionRate;
         yield return new WaitForSeconds(productionSpeed);
+        startedWorking = false;
     }
 }

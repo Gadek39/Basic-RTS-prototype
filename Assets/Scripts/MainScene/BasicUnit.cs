@@ -11,12 +11,17 @@ public class BasicUnit : Unit
 
     public override void Working()
     {
-        StartCoroutine(MilkGathering(1, 2));
+        if (!startedWorking)
+        {
+            StartCoroutine(MilkGathering(workEfficency, arbitraryRateNumber));
+        }
     }
     IEnumerator MilkGathering(float productionRate, float productionSpeed)
     {
+        startedWorking = true;
         yield return new WaitForSeconds(productionSpeed); 
         Debug.Log(GameManager.instance.milk += productionRate);
+        startedWorking = false;
         
     }
 }

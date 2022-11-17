@@ -16,9 +16,13 @@ public abstract class Unit : MonoBehaviour
     protected float efficencyCorrector = 1;
 
     public bool isWorking;
-    protected bool isEating;
-    protected bool isResting;
+    public bool isEating;
+    public bool isResting;
     protected bool isSelected;
+    protected bool startedLoosingEnergy;
+    protected bool startedEating;
+    protected bool startedLearning;
+    protected bool startedWorking;
     protected float workEfficency;
     public float experience;
 
@@ -33,7 +37,10 @@ public abstract class Unit : MonoBehaviour
     }
     public void Start()
     {
-
+        startedLoosingEnergy = false;
+        startedWorking = false;
+        startedEating = false;
+        startedLearning = false;
     }
 
     // Update is called once per frame
@@ -45,39 +52,42 @@ public abstract class Unit : MonoBehaviour
         } else if (isWorking)
         {
             Working();
-            StartCoroutine(gainingExperience(3));
-            StartCoroutine(EnergyDepletion(2+workEfficency));
-        }
-        if (!isWorking)
-        {
-            StopCoroutine(gainingExperience(3+workEfficency));
-            StopCoroutine(EnergyDepletion(2));
+            if (!startedLoosingEnergy)
+            {
+                StartCoroutine(EnergyDepletion(workEfficency));
+            }
+            if (!startedLearning)
+            {
+                StartCoroutine(gainingExperience(arbitraryRateNumber));
+            }
         }
         if (isEating)
         {
-            StartCoroutine(EatingInCamp());
+            if (!startedEating)
+            {
+                StartCoroutine(EatingInCamp());
+            }
+        }
+        if (isResting)
+        {
+            isEating = false;
+            isWorking = false;
+        } else if (isEating)
+            {
+            isWorking = false;
         }
     }
     IEnumerator EnergyDepletion(float workEfficency)
     {
-        while (isWorking && energy >0)
-        {
+            startedLoosingEnergy = true;
             energy--;
-            Debug.Log(energy);
             yield return new WaitForSeconds(workEfficency);
-        }
-        if (energy == 0)
-        {
-            isWorking = false;
-            isResting = true;
-        }
-        
-        
-        
+            startedLoosingEnergy = false;
     }
     IEnumerator EatingInCamp()
     {
-        while (energy < 100 && GameManager.instance.food > 0 && isEating)
+        startedEating = true;
+        if (energy < 100 && GameManager.instance.food > 0 && isEating)
         {
             energy += 5;
             GameManager.instance.food--;
@@ -85,18 +95,18 @@ public abstract class Unit : MonoBehaviour
         }
         if (energy < 100 && GameManager.instance.food == 0 && isEating || energy == 100)
         {
+            isEating = false;
             isResting = true;
         }
+        startedEating = false;
     }
     IEnumerator gainingExperience(float experienceGainRate)
     {
-        while (isWorking && energy > 0)
-        {
-            yield return new WaitForSeconds(experienceGainRate);
-            workEfficency = Mathf.Ceil((experience - expiernceDeductor) / expierenceDivider + expierienceCorrector);
-            experience++;
-            Debug.Log(workEfficency);
-        }
+        startedLearning = true;
+        yield return new WaitForSeconds(experienceGainRate);
+        workEfficency = Mathf.Ceil((experience - expiernceDeductor) / expierenceDivider + expierienceCorrector);
+        experience++;
+        startedLearning = false;
     }
     public abstract void Working();
     

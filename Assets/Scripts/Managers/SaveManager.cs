@@ -6,12 +6,15 @@ using UnityEngine;
 using File = System.IO.File;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 
 public class SaveManager : MonoBehaviour
 {
     private SaveData saveData;
     public static SaveManager Instance;
     private List<ISaveData> savedObjects;
+    [SerializeField] string fileName;
+    private DataFilesManager dataFilesManager;
     
 
     private void Awake()
@@ -26,29 +29,39 @@ public class SaveManager : MonoBehaviour
     }
     private void Start()
     {
+        dataFilesManager = new DataFilesManager(Application.persistentDataPath, fileName);
         savedObjects = FindAllSavedObjects();
+        fileName = "saveslot0";
     }
     public void NewGame()
     {
         this.saveData = new SaveData();
     }
-    public void SaveGame()
+    public void SaveGame(int slotNumber)
     {
+        fileName += slotNumber;
         foreach (ISaveData saveObj in savedObjects)
         {
             saveObj.SaveData(ref saveData);
         }
 
-        Debug.Log("Saved\nMilk " + saveData.milk + "\n Food " + saveData.food + "\n Safety " + saveData.shield);
+        dataFilesManager.Save(saveData);
     }
-    public void LoadGame()
+    public void LoadGame(int slotNumber)
     {
+        fileName += slotNumber;
+
+        this.saveData = dataFilesManager.Load();
+
+        if (this.saveData == null)
+        {
+            Debug.Log("No save data found");
+        }
+
         foreach (ISaveData saveObj in savedObjects)
         {
             saveObj.LoadData(saveData);
         }
-        Debug.Log("Loaded values\nMilk " + saveData.milk + "\n Food " + saveData.food + "\n Safety " + saveData.shield);
-
     }
     private List<ISaveData> FindAllSavedObjects()
     {

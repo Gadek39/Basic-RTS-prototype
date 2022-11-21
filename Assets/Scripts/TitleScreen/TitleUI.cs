@@ -12,6 +12,9 @@ public class TitleUI : MonoBehaviour
 {
     [SerializeField] Button resumeButton;
     [SerializeField] Button saveButton;
+
+    [SerializeField] List<Button> saveButtons;
+    [SerializeField] List<Button> loadButtons;
     // Start is called before the first frame update
     void Start()
     {
@@ -38,6 +41,7 @@ public class TitleUI : MonoBehaviour
     {
         GameManager.instance.isPaused = false;
         SceneManager.UnloadSceneAsync(0);
+        Time.timeScale = 1;
     }
     public void ExitGame()
     {
@@ -49,11 +53,11 @@ public class TitleUI : MonoBehaviour
     }
     public void SaveGame()
     {
-        SaveManager.Instance.SaveGame();
+        SaveManager.Instance.SaveGame(1);
     }
     public void LoadGame()
     {
-        SaveManager.Instance.LoadGame();
+        SaveManager.Instance.LoadGame(1);
     }
     private void SetPauseMenu()
     {

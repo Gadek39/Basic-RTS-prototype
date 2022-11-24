@@ -14,7 +14,6 @@ public class TitleUI : MonoBehaviour
     [SerializeField] Button saveButton;
     [SerializeField] GameObject saveMenu;
     [SerializeField] GameObject loadMenu;
-    public int currentSaveSlot;
 
     // Start is called before the first frame update
     void Start()
@@ -32,7 +31,11 @@ public class TitleUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GameManager.instance.isPaused = false;
+        SceneManager.UnloadSceneAsync(0);
+        }
     }
     public void StartGame()
     {
@@ -75,14 +78,9 @@ public class TitleUI : MonoBehaviour
             loadMenu.SetActive(true);
         }
     }
-    public void SaveGameSlot()
-    {
-        SaveManager.Instance.SaveGame(currentSaveSlot);
-    }
+    
     public void LoadGameSlot()
     {
-        SaveManager.Instance.LoadGame(currentSaveSlot);
-        SceneManager.LoadScene(1);
     }
     private void SetPauseMenu()
     {

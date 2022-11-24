@@ -14,6 +14,8 @@ public class SaveData
         public int energy;
         public int experience;
         public bool isWorking;
+        public bool isEating;
+        public bool isResting;
         public Vector3 position;
         public Quaternion rotation;
     }
@@ -21,6 +23,8 @@ public class SaveData
     public float milk;
     public float shield;
     public List<UnitData> units = new List<UnitData>();
+    public Vector3 cameraPos;
+    public Quaternion cameraRot;
     
     public SaveData()
     {
@@ -28,5 +32,7 @@ public class SaveData
         milk = 0;
         shield = 0;
         units = null;
+        cameraPos = Vector3.zero;
+        cameraRot = Quaternion.identity;
     }
 }

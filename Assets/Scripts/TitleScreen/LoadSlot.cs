@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class LoadSlot : MonoBehaviour
 {
@@ -28,8 +29,9 @@ public class LoadSlot : MonoBehaviour
     }
     public void OnClickedLoad()
     {
-        titleUI.currentSaveSlot = slot;
-        SaveManager.Instance.dataFilesManager = new DataFilesManager(Application.persistentDataPath, SaveManager.Instance.fileName);
-        titleUI.LoadGameSlot();
+        SaveManager.Instance.LoadGame(slot, SaveManager.Instance.fileName);
+        SceneManager.LoadScene(1);
+        GameManager.instance.hasStartedGame = true;
+
     }
 }

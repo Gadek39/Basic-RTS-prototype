@@ -34,7 +34,6 @@ public abstract class Unit : MonoBehaviour
         experience = 1;
         energy = 100;
         workEfficency = 1;
-        LoadFromGameManager();
         
     }
     public void Start()
@@ -43,6 +42,7 @@ public abstract class Unit : MonoBehaviour
         startedWorking = false;
         startedEating = false;
         startedLearning = false;
+        LoadFromGameManager();
     }
 
     // Update is called once per frame
@@ -78,7 +78,6 @@ public abstract class Unit : MonoBehaviour
             {
             isWorking = false;
         }
-        AddToGameManager();
     }
     IEnumerator EnergyDepletion(float workEfficency)
     {
@@ -121,6 +120,8 @@ public abstract class Unit : MonoBehaviour
         unitData.energy = energy;
         unitData.experience = experience;
         unitData.isWorking = isWorking;
+        unitData.isEating = isEating;
+        unitData.isResting = isResting;
         unitData.position = transform.position;
         unitData.rotation = transform.rotation;
         GameManager.instance.units.Add(unitData);
@@ -135,6 +136,8 @@ public abstract class Unit : MonoBehaviour
                 energy = unitData.energy;
                 experience = unitData.experience;
                 isWorking = unitData.isWorking;
+                isEating = unitData.isEating;
+                isResting = unitData.isResting;
                 transform.position = unitData.position;
                 transform.rotation = unitData.rotation;
                 break;

@@ -19,8 +19,8 @@ public class BasicUnit : Unit
     IEnumerator MilkGathering(float productionRate, float productionSpeed)
     {
         startedWorking = true;
+        GameManager.instance.milk += productionRate;
         yield return new WaitForSeconds(productionSpeed); 
-        Debug.Log(GameManager.instance.milk += productionRate);
         startedWorking = false;
         
     }

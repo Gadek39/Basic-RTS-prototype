@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour, ISaveData
     public float food = 0;
     public float shield = 0;
     public List<UnitData> units = new List<UnitData>();
+    public Vector3 cameraPos;
+    public Quaternion cameraRot;
 
     private void Awake()
     {
@@ -31,6 +33,8 @@ public class GameManager : MonoBehaviour, ISaveData
         data.shield = shield;
         data.milk = milk;
         data.units = units;
+        data.cameraPos = cameraPos;
+        data.cameraRot = cameraRot;
     }
     public void LoadData (SaveData data)
     {
@@ -38,6 +42,8 @@ public class GameManager : MonoBehaviour, ISaveData
         food = data.food;
         shield = data.shield;
         units = data.units;
+        cameraPos = data.cameraPos;
+        cameraRot = data.cameraRot;
     }
     public void showInventoryStatus()
     {

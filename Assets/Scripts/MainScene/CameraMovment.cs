@@ -14,7 +14,8 @@ public class CameraMovment : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        transform.position = GameManager.instance.cameraPos;
+        transform.rotation = GameManager.instance.cameraRot;
     }
 
     // Update is called once per frame
@@ -28,14 +29,22 @@ public class CameraMovment : MonoBehaviour
             {
                 CamReset();
             }
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-
-                GoToMenu();
-            }
             if (Input.GetKeyDown(KeyCode.I))
             {
                 GameManager.instance.showInventoryStatus();
+            }
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                GameManager.instance.units.Clear();
+                List<Unit> allTheUnits = new List<Unit>();
+                allTheUnits.AddRange(FindObjectsOfType<Unit>(true));
+                foreach (Unit unit in allTheUnits)
+                {
+                    unit.AddToGameManager();
+                }
+                GameManager.instance.cameraPos = transform.position;
+                GameManager.instance.cameraRot = transform.rotation;
+                GoToMenu();
             }
         }
         GamePaused();

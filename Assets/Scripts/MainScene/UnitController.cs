@@ -40,7 +40,15 @@ public class UnitController : MonoBehaviour
         {
             var unit = hit.collider.GetComponentInParent<Unit>();
             selectedUnit = unit;
-            Debug.Log(unit);
+            if (unit != null)
+            {
+                Debug.Log(unit.name + "\nEnergy: " + unit.energy + "\nExperience: " + unit.experience + "\n Working: " + unit.isWorking + " Resting: " + unit.isResting + " Eating: " + unit.isEating);
+
+            }
+            else
+            {
+                Debug.Log("Nothing here!");
+            }
         }
         if (selectedUnit != null)
         {

@@ -31,26 +31,16 @@ public class SaveManager : MonoBehaviour
     {
         savedObjects = FindAllSavedObjects();
         fileName = "saveslot0";
-        dataFilesManager = new DataFilesManager(Application.persistentDataPath, fileName);
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-            {
-            savedObjects = FindAllSavedObjects();
-            int slot = 4;
-            dataFilesManager = new DataFilesManager(Application.persistentDataPath, fileName);
-            SaveGame(slot);
-        }
-    }
     public void NewGame()
     {
-        this.saveData = new SaveData();
+        saveData = new SaveData();
     }
-    public void SaveGame(int slotNumber)
+    public void SaveGame(int slotNumber, string filenName)
     {
-        fileName += slotNumber;
+        string saveName = fileName + slotNumber;
+        dataFilesManager = new DataFilesManager(Application.persistentDataPath, saveName);
         foreach (ISaveData saveObj in savedObjects)
         {
             saveObj.SaveData(saveData);
@@ -58,9 +48,10 @@ public class SaveManager : MonoBehaviour
 
         dataFilesManager.Save(saveData);
     }
-    public void LoadGame(int slotNumber)
+    public void LoadGame(int slotNumber, string filenName)
     {
-        fileName += slotNumber;
+        string saveName = fileName + slotNumber;
+        dataFilesManager = new DataFilesManager(Application.persistentDataPath, saveName);
 
         this.saveData = dataFilesManager.Load();
 

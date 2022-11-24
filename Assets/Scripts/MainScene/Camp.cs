@@ -13,13 +13,6 @@ public class Camp : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            showInventoryStatus();
-        }
-    }
-    void showInventoryStatus()
-    {
-        Debug.Log("Current resources:\nMilk - " + GameManager.instance.milk + "\nFood - " + GameManager.instance.food + "\nSafety - " + GameManager.instance.shield);
+        
     }
 }

@@ -12,9 +12,10 @@ public class TitleUI : MonoBehaviour
 {
     [SerializeField] Button resumeButton;
     [SerializeField] Button saveButton;
+    [SerializeField] GameObject saveMenu;
+    [SerializeField] GameObject loadMenu;
+    public int currentSaveSlot;
 
-    [SerializeField] List<Button> saveButtons;
-    [SerializeField] List<Button> loadButtons;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,12 +25,14 @@ public class TitleUI : MonoBehaviour
         {
             SetPauseMenu();
         }
+        loadMenu.SetActive(false);
+        saveMenu.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-            
+        
     }
     public void StartGame()
     {
@@ -41,7 +44,6 @@ public class TitleUI : MonoBehaviour
     {
         GameManager.instance.isPaused = false;
         SceneManager.UnloadSceneAsync(0);
-        Time.timeScale = 1;
     }
     public void ExitGame()
     {
@@ -51,13 +53,36 @@ public class TitleUI : MonoBehaviour
         Application.Quit();
 #endif
     }
-    public void SaveGame()
+    public void SaveMenu()
     {
-        SaveManager.Instance.SaveGame(1);
+        if (saveMenu.activeInHierarchy)
+        {
+            saveMenu.SetActive(false);
+        }
+        else if (!saveMenu.activeInHierarchy)
+        {
+            saveMenu.SetActive(true);
+        }
     }
-    public void LoadGame()
+    public void LoadMenu()
     {
-        SaveManager.Instance.LoadGame(1);
+        if (loadMenu.activeInHierarchy)
+        {
+            loadMenu.SetActive(false);
+        }
+        else if (!loadMenu.activeInHierarchy)
+        {
+            loadMenu.SetActive(true);
+        }
+    }
+    public void SaveGameSlot()
+    {
+        SaveManager.Instance.SaveGame(currentSaveSlot);
+    }
+    public void LoadGameSlot()
+    {
+        SaveManager.Instance.LoadGame(currentSaveSlot);
+        SceneManager.LoadScene(1);
     }
     private void SetPauseMenu()
     {

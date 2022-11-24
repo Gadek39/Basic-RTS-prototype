@@ -10,12 +10,11 @@ public class CameraMovment : MonoBehaviour
     [SerializeField] float rotationSpeed;
     [SerializeField] float bounds;
     [SerializeField] Camera gameCamera;
-    private GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        gameManager = FindObjectOfType<GameManager>();
+
     }
 
     // Update is called once per frame
@@ -23,13 +22,21 @@ public class CameraMovment : MonoBehaviour
     {
         CameraMovement();
         CameraRotation();
-        if (Input.GetKeyDown(KeyCode.M))
+        if (!GameManager.instance.isPaused)
         {
-            CamReset();
-        }
-        if (Input.GetKeyDown(KeyCode.Escape) && !gameManager.isPaused)
-        {
-            GoToMenu();
+            if (Input.GetKeyDown(KeyCode.M))
+            {
+                CamReset();
+            }
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+
+                GoToMenu();
+            }
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                GameManager.instance.showInventoryStatus();
+            }
         }
         GamePaused();
         
@@ -106,15 +113,17 @@ public class CameraMovment : MonoBehaviour
     {
         if (SceneManager.sceneCount > 1)
         {
-            gameManager.isPaused = true;
+            GameManager.instance.isPaused = true;
+            Time.timeScale = 0;
         }
         else
         {
-            gameManager.isPaused = false;
+            GameManager.instance.isPaused = false;
         }
-        if (!gameManager.isPaused)
+        if (!GameManager.instance.isPaused)
         {
             gameCamera.gameObject.SetActive(true);
+            Time.timeScale = 1;
         }
     }
 }

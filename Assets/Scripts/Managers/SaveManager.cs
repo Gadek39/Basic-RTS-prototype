@@ -13,8 +13,8 @@ public class SaveManager : MonoBehaviour
     private SaveData saveData;
     public static SaveManager Instance;
     private List<ISaveData> savedObjects;
-    [SerializeField] string fileName;
-    private DataFilesManager dataFilesManager;
+    public string fileName;
+    public DataFilesManager dataFilesManager;
     
 
     private void Awake()
@@ -29,9 +29,20 @@ public class SaveManager : MonoBehaviour
     }
     private void Start()
     {
-        dataFilesManager = new DataFilesManager(Application.persistentDataPath, fileName);
         savedObjects = FindAllSavedObjects();
         fileName = "saveslot0";
+        dataFilesManager = new DataFilesManager(Application.persistentDataPath, fileName);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+            {
+            savedObjects = FindAllSavedObjects();
+            int slot = 4;
+            dataFilesManager = new DataFilesManager(Application.persistentDataPath, fileName);
+            SaveGame(slot);
+        }
     }
     public void NewGame()
     {
@@ -42,7 +53,7 @@ public class SaveManager : MonoBehaviour
         fileName += slotNumber;
         foreach (ISaveData saveObj in savedObjects)
         {
-            saveObj.SaveData(ref saveData);
+            saveObj.SaveData(saveData);
         }
 
         dataFilesManager.Save(saveData);

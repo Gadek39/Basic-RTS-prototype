@@ -21,6 +21,7 @@ public class DataFilesManager
         {
             Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
             string dataToStore = JsonUtility.ToJson(data);
+            Debug.Log(dataToStore);
             using (FileStream stream = new FileStream(fullPath, FileMode.Create))
             {
                 using (StreamWriter writer = new StreamWriter(stream))
@@ -32,7 +33,7 @@ public class DataFilesManager
         }
         catch (Exception e)
         {
-            Debug.Log("Couldn't save data under " + fullPath + "\n" + e);
+            Debug.Log("Couldn't save data under " + fullPath + "\n" + fileName + "\n" + e);
         }
 
     }

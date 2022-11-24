@@ -11,25 +11,23 @@ public class UnitController : MonoBehaviour
     public float speed;
     public Unit selectedUnit;
     public GameObject indicator;
-    private GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
         _camera = GetComponent<Camera>();
         indicator.SetActive(false);
-        gameManager = FindObjectOfType<GameManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        CheckGameStatus();
-        if (Input.GetMouseButtonDown(0) && !gameManager.isPaused)
+        CheckGameStatus();if (!GameManager.instance.isPaused)
+        if (Input.GetMouseButtonDown(0))
         {
             HandleSelection();
         }
-        if (Input.GetMouseButtonUp(1) && selectedUnit != null && !gameManager.isPaused)
+        if (Input.GetMouseButtonUp(1) && selectedUnit != null)
         {
             HandleAction();
         }
@@ -76,7 +74,7 @@ public class UnitController : MonoBehaviour
     }
     void CheckGameStatus()
     {
-        if (gameManager.isPaused)
+        if (GameManager.instance.isPaused)
         {
             _camera.gameObject.SetActive(false);
         }

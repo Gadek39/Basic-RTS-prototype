@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static SaveData;
 
 public class GameManager : MonoBehaviour, ISaveData
 {
@@ -10,6 +11,7 @@ public class GameManager : MonoBehaviour, ISaveData
     public float milk = 0;
     public float food = 0;
     public float shield = 0;
+    public List<UnitData> units = new List<UnitData>();
 
     private void Awake()
     {
@@ -23,16 +25,22 @@ public class GameManager : MonoBehaviour, ISaveData
 
     }
         
-    public void SaveData (ref SaveData data)
+    public void SaveData (SaveData data)
     {
-        data.food = this.food;
-        data.shield = this.shield;
-        data.milk = this.milk;
+        data.food = food;
+        data.shield = shield;
+        data.milk = milk;
+        data.units = units;
     }
     public void LoadData (SaveData data)
     {
-        this.milk = data.milk;
-        this.food = data.food;
-        this.shield = data.shield;
+        milk = data.milk;
+        food = data.food;
+        shield = data.shield;
+        units = data.units;
+    }
+    public void showInventoryStatus()
+    {
+        Debug.Log("Current resources:\nMilk - " + milk + "\nFood - " + food + "\nSafety - " + shield);
     }
 }

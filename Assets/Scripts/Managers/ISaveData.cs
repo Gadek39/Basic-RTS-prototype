@@ -5,5 +5,5 @@ using UnityEngine;
 public interface ISaveData
 {
     void LoadData(SaveData data);
-    void SaveData(ref SaveData data);
+    void SaveData(SaveData data);
 }

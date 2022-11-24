@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public abstract class Unit : MonoBehaviour
 {
     protected float speed { get; private set; }
-    public float energy;
+    public int energy;
 
     protected float arbitraryRateNumber = 2;
 
@@ -24,7 +25,7 @@ public abstract class Unit : MonoBehaviour
     protected bool startedLearning;
     protected bool startedWorking;
     protected float workEfficency;
-    public float experience;
+    public int experience;
 
 
     // Start is called before the first frame update
@@ -33,6 +34,7 @@ public abstract class Unit : MonoBehaviour
         experience = 1;
         energy = 100;
         workEfficency = 1;
+        LoadFromGameManager();
         
     }
     public void Start()
@@ -76,6 +78,7 @@ public abstract class Unit : MonoBehaviour
             {
             isWorking = false;
         }
+        AddToGameManager();
     }
     IEnumerator EnergyDepletion(float workEfficency)
     {
@@ -109,5 +112,34 @@ public abstract class Unit : MonoBehaviour
         startedLearning = false;
     }
     public abstract void Working();
-    
+
+    public void AddToGameManager()
+    {
+        SaveData.UnitData unitData = new SaveData.UnitData();
+        unitData.name = gameObject.name;
+        unitData.isActive = gameObject.activeInHierarchy;
+        unitData.energy = energy;
+        unitData.experience = experience;
+        unitData.isWorking = isWorking;
+        unitData.position = transform.position;
+        unitData.rotation = transform.rotation;
+        GameManager.instance.units.Add(unitData);
+    }
+    public void LoadFromGameManager()
+    {
+        foreach (SaveData.UnitData unitData in GameManager.instance.units)
+        {
+            if (unitData.name == gameObject.name)
+            {
+                gameObject.SetActive(unitData.isActive);
+                energy = unitData.energy;
+                experience = unitData.experience;
+                isWorking = unitData.isWorking;
+                transform.position = unitData.position;
+                transform.rotation = unitData.rotation;
+                break;
+            }
+        }
+    }
+
 }

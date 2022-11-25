@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour, ISaveData
     public float food = 0;
     public float shield = 0;
     public List<UnitData> units = new List<UnitData>();
+    private List<GameObject> UnitsToActivate = new List<GameObject>();
     public Vector3 cameraPos;
     public Quaternion cameraRot;
 
@@ -48,5 +49,18 @@ public class GameManager : MonoBehaviour, ISaveData
     public void showInventoryStatus()
     {
         Debug.Log("Current resources:\nMilk - " + milk + "\nFood - " + food + "\nSafety - " + shield);
+    }
+    public void LoadSavedDataForUnits()
+    {
+            foreach (UnitData data in units)
+            {
+                if (data.isActive)
+                    UnitsToActivate.Add(GameObject.Find(data.name));
+            }
+            foreach (GameObject activeUnit in UnitsToActivate)
+            {
+                activeUnit.SetActive(true);
+                Debug.Log(activeUnit.name);
+            }
     }
 }

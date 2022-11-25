@@ -9,6 +9,7 @@ public class LoadSlot : MonoBehaviour
 {
     [SerializeField] int slot;
     private TitleUI titleUI;
+    public List<Unit> units = new List<Unit>();
 
     private void Start()
     {
@@ -32,6 +33,6 @@ public class LoadSlot : MonoBehaviour
         SaveManager.Instance.LoadGame(slot, SaveManager.Instance.fileName);
         SceneManager.LoadScene(1);
         GameManager.instance.hasStartedGame = true;
-
+        GameManager.instance.LoadSavedDataForUnits();
     }
 }

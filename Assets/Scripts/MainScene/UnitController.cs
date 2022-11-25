@@ -22,14 +22,18 @@ public class UnitController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CheckGameStatus();if (!GameManager.instance.isPaused)
-        if (Input.GetMouseButtonDown(0))
+        CheckGameStatus();
+        if (!GameManager.instance.isPaused)
         {
-            HandleSelection();
-        }
-        if (Input.GetMouseButtonUp(1) && selectedUnit != null)
-        {
-            HandleAction();
+            
+            if (Input.GetMouseButtonDown(0))
+            {
+                HandleSelection();
+            }
+            if (Input.GetMouseButtonUp(1) && selectedUnit != null)
+            {
+                HandleAction();
+            }
         }
     }
     void HandleSelection()

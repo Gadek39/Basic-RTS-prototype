@@ -21,7 +21,7 @@ public class DataFilesManager
         {
             Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
             string dataToStore = JsonUtility.ToJson(data);
-            Debug.Log(dataToStore);
+            Debug.Log("Data saved to " + fileName + "\n" + dataToStore);
             using (FileStream stream = new FileStream(fullPath, FileMode.Create))
             {
                 using (StreamWriter writer = new StreamWriter(stream))

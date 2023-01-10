@@ -39,6 +39,11 @@ public class TitleUI : MonoBehaviour
     }
     public void StartGame()
     {
+        if (SceneManager.sceneCount == 2)
+        {
+            SceneManager.UnloadSceneAsync(1);
+            Debug.Log("ok");
+        }
         SaveManager.Instance.NewGame();
         SceneManager.LoadScene(1);
         GameManager.instance.hasStartedGame = true;

@@ -31,7 +31,7 @@ public class SaveData
         food = 0;
         milk = 0;
         shield = 0;
-        units = null;
+        units = new List<UnitData>();
         cameraPos = Vector3.zero;
         cameraRot = Quaternion.identity;
     }

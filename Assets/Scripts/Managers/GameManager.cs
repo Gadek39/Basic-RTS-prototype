@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour, ISaveData
         data.units = units;
         data.cameraPos = cameraPos;
         data.cameraRot = cameraRot;
+        Debug.Log("Save Data");
     }
     public void LoadData (SaveData data)
     {
@@ -45,6 +46,7 @@ public class GameManager : MonoBehaviour, ISaveData
         units = data.units;
         cameraPos = data.cameraPos;
         cameraRot = data.cameraRot;
+        Debug.Log("Load Data");
     }
     public void showInventoryStatus()
     {

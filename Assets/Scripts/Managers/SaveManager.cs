@@ -36,6 +36,11 @@ public class SaveManager : MonoBehaviour
     public void NewGame()
     {
         saveData = new SaveData();
+        foreach (ISaveData saveObj in savedObjects)
+        {
+            saveObj.LoadData(saveData);
+        }
+        Debug.Log("Game Started");
     }
     public void SaveGame(int slotNumber, string filenName)
     {
@@ -47,6 +52,7 @@ public class SaveManager : MonoBehaviour
         }
 
         dataFilesManager.Save(saveData);
+        Debug.Log("Game Saved");
     }
     public void LoadGame(int slotNumber, string filenName)
     {
@@ -64,6 +70,7 @@ public class SaveManager : MonoBehaviour
         {
             saveObj.LoadData(saveData);
         }
+        Debug.Log("Game Loaded");
     }
     private List<ISaveData> FindAllSavedObjects()
     {

@@ -33,6 +33,5 @@ public class LoadSlot : MonoBehaviour
         SaveManager.Instance.LoadGame(slot, SaveManager.Instance.fileName);
         SceneManager.LoadScene(1);
         GameManager.instance.hasStartedGame = true;
-        GameManager.instance.LoadSavedDataForUnits();
     }
 }

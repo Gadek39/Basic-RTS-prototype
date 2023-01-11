@@ -46,6 +46,10 @@ public class CameraMovment : MonoBehaviour
                 GameManager.instance.cameraRot = transform.rotation;
                 GoToMenu();
             }
+            if (GameManager.instance.newGameStarted)
+            {
+                GameManager.instance.PrepareStartingUnits();
+            }
         }
         GamePaused();
         

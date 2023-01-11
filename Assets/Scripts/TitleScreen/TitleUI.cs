@@ -47,6 +47,7 @@ public class TitleUI : MonoBehaviour
         SaveManager.Instance.NewGame();
         SceneManager.LoadScene(1);
         GameManager.instance.hasStartedGame = true;
+        GameManager.instance.newGameStarted = true;
     }
     public void ResumeGame()
     {

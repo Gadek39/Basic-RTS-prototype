@@ -12,9 +12,13 @@ public class GameManager : MonoBehaviour, ISaveData
     public float food = 0;
     public float shield = 0;
     public List<UnitData> units = new List<UnitData>();
-    private List<GameObject> UnitsToActivate = new List<GameObject>();
+    public List<GameObject> UnitsToActivate = new List<GameObject>();
     public Vector3 cameraPos;
     public Quaternion cameraRot;
+    public List<GameObject> allUnits = new List<GameObject>();
+    public GameObject startingUnit;
+    public bool newGameStarted;
+
 
     private void Awake()
     {
@@ -64,5 +68,22 @@ public class GameManager : MonoBehaviour, ISaveData
                 activeUnit.SetActive(true);
                 Debug.Log(activeUnit.name);
             }
+    }
+    public void PrepareStartingUnits()
+    {
+        allUnits = new List<GameObject>();
+        foreach (GameObject eachUnit in FindObjectsOfType<GameObject>())
+        {
+            if (eachUnit.tag == "unit" && eachUnit.name != "Unit")
+            {
+                allUnits.Add(eachUnit);
+            }
+        }
+        foreach (GameObject everyUnit in allUnits)
+        {
+            Debug.Log(everyUnit.name);
+            everyUnit.SetActive(false);
+        }
+        newGameStarted = false;
     }
 }

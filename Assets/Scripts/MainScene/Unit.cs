@@ -9,9 +9,9 @@ public abstract class Unit : MonoBehaviour
     protected float speed { get; private set; }
     public int energy;
 
-    protected float arbitraryRateNumber = 2;
+    protected float arbitraryRateNumber = 4;
 
-    protected float expiernceDeductor = 2;
+    protected float expiernceDeductor = 3;
     protected float expierenceDivider = 4;
     protected float expierienceCorrector = 1.5f;
     protected float efficencyCorrector = 1;
@@ -51,7 +51,8 @@ public abstract class Unit : MonoBehaviour
         if (energy < 1)
         {
             isWorking = false;
-        } else if (isWorking)
+        } 
+        else if (isWorking)
         {
             Working();
             if (!startedLoosingEnergy)

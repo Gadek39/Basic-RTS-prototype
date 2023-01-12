@@ -4,11 +4,24 @@ using UnityEngine;
 
 public class CookUnit : Unit
 {
+    new void Start()
+    {
+        workBulding = GameObject.Find("Kitchen");
+        base.Start();
+    }
     public override void Working()
     {
-        if (!startedWorking)
+        if (isInPlace)
         {
-            StartCoroutine(CookingStuff(workEfficency, arbitraryRateNumber));
+            distanceIsMeassured = false;
+            if (!startedWorking)
+            {
+                StartCoroutine(CookingStuff(workEfficency, arbitraryRateNumber));
+            }
+        }
+        else
+        {
+            MoveToPlace(workplace);
         }
     }
     IEnumerator CookingStuff(float productionRate, float productionSpeed)

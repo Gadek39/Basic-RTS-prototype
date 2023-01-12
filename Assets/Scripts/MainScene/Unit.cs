@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
+using UnityEditor.U2D;
 using UnityEngine;
 
 public abstract class Unit : MonoBehaviour
@@ -9,12 +10,19 @@ public abstract class Unit : MonoBehaviour
     protected float speed { get; private set; }
     public int energy;
 
+    private GameObject camp;
+    protected GameObject workBulding;
+
     protected float arbitraryRateNumber = 4;
 
     protected float expiernceDeductor = 3;
     protected float expierenceDivider = 4;
     protected float expierienceCorrector = 1.5f;
     protected float efficencyCorrector = 1;
+    protected float startingTime;
+    protected float distanceCovered;
+    protected float fractionOfDistance;
+    protected float distanceToPlace;
 
     public bool isWorking;
     public bool isEating;
@@ -25,7 +33,13 @@ public abstract class Unit : MonoBehaviour
     protected bool startedLearning;
     protected bool startedWorking;
     protected float workEfficency;
+    protected bool isInPlace;
+    private bool isInCamp;
+    protected bool distanceIsMeassured;
     public int experience;
+
+    protected Vector3 workplace;
+    private Vector3 campsite;
 
 
     // Start is called before the first frame update
@@ -34,7 +48,8 @@ public abstract class Unit : MonoBehaviour
         experience = 1;
         energy = 100;
         workEfficency = 1;
-        
+        speed = 1;
+
     }
     public void Start()
     {
@@ -43,11 +58,28 @@ public abstract class Unit : MonoBehaviour
         startedEating = false;
         startedLearning = false;
         LoadFromGameManager();
+        camp = GameObject.Find("Camp");
+        campsite = new Vector3(camp.transform.position.x, transform.position.y, camp.transform.position.z);
+        workplace = new Vector3(workBulding.transform.position.x, transform.position.y, workBulding.transform.position.z);
     }
 
     // Update is called once per frame
     public void Update()
     {
+        if (transform.position == workplace)
+        {
+            isInPlace = true;
+        }
+        if (transform.position == campsite)
+        {
+            isInCamp = true;
+        }
+        else
+        {
+            isInPlace = false;
+            isInCamp = false;
+        }
+        
         if (energy < 1)
         {
             isWorking = false;
@@ -59,22 +91,32 @@ public abstract class Unit : MonoBehaviour
             {
                 StartCoroutine(EnergyDepletion(workEfficency));
             }
-            if (!startedLearning)
+            if (!startedLearning && isInPlace)
             {
                 StartCoroutine(gainingExperience(arbitraryRateNumber));
             }
         }
         if (isEating)
         {
-            if (!startedEating)
+            if (isInCamp)
             {
-                StartCoroutine(EatingInCamp());
+                distanceIsMeassured = false;
+                if (!startedEating)
+                {
+                    StartCoroutine(EatingInCamp());
+                }
             }
+            else if (!isInCamp && GameManager.instance.food > 0)
+            {
+                MoveToPlace(campsite);
+            }
+            
         }
         if (isResting)
         {
             isEating = false;
             isWorking = false;
+            distanceIsMeassured = false;
         } else if (isEating)
             {
             isWorking = false;
@@ -145,5 +187,21 @@ public abstract class Unit : MonoBehaviour
             }
         }
     }
-
+    protected void MoveToPlace(Vector3 location)
+    {
+        if (!distanceIsMeassured)
+        {
+            distanceToPlace = Vector3.Distance(transform.position, location);
+            startingTime = Time.time;
+            distanceIsMeassured = true;
+            Debug.Log(workplace);
+            Debug.Log(campsite);
+        }
+        else if (distanceIsMeassured)
+        {
+            distanceCovered = (Time.time - startingTime) * speed;
+            fractionOfDistance = distanceCovered / distanceToPlace;
+            transform.position = Vector3.Lerp(transform.position, location, fractionOfDistance);
+        }
+    }
 }

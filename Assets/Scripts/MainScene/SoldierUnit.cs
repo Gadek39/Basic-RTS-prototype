@@ -10,7 +10,12 @@ public class SoldierUnit : Unit
     private float defenceChange;
     private float defEqualizer;
     private bool isGuarding;
-    
+
+    new void Start()
+    {
+        workBulding = GameObject.Find("Tower");
+        base.Start();
+    }
     new void Update()
     {
         base.Update();

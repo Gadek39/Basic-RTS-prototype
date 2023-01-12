@@ -4,16 +4,25 @@ using UnityEngine;
 
 public class BasicUnit : Unit
 {
-    // Start is called before the first frame update
-
-
-    // Update is called once per frame
-
+   
+    new void Start()
+    {
+        workBulding = GameObject.Find("Barn");
+        base.Start();
+    }
     public override void Working()
     {
         if (!startedWorking)
         {
-            StartCoroutine(MilkGathering(workEfficency, arbitraryRateNumber));
+            if (isInPlace)
+            {
+                distanceIsMeassured = false;   
+                StartCoroutine(MilkGathering(workEfficency, arbitraryRateNumber));
+            }
+            else
+            {
+                MoveToPlace(workplace);
+            }
         }
     }
     IEnumerator MilkGathering(float productionRate, float productionSpeed)

@@ -1078,7 +1078,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1673713845454008593, guid: 7074b7ccabfffe140ad69f89e3b06fe9, type: 3}
       propertyPath: m_Name
-      value: UnitCook
+      value: UnitCooker
       objectReference: {fileID: 0}
     - target: {fileID: 1673713845454008593, guid: 7074b7ccabfffe140ad69f89e3b06fe9, type: 3}
       propertyPath: m_IsActive

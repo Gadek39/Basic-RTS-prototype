@@ -11,17 +11,16 @@ public class CookUnit : Unit
     }
     public override void Working()
     {
-        if (isInPlace)
-        {
-            distanceIsMeassured = false;
-            if (!startedWorking)
-            {
-                StartCoroutine(CookingStuff(workEfficency, arbitraryRateNumber));
-            }
-        }
-        else
+        if (!isInPlace)
         {
             MoveToPlace(workplace);
+            return;
+        }
+
+        distanceIsMeassured = false;
+        if (!startedWorking)
+        {
+            StartCoroutine(CookingStuff(workEfficency, arbitraryRateNumber));
         }
     }
     IEnumerator CookingStuff(float productionRate, float productionSpeed)

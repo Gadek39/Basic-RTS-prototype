@@ -33,8 +33,8 @@ public abstract class Unit : MonoBehaviour
     protected bool startedLearning;
     protected bool startedWorking;
     protected float workEfficency;
-    protected bool isInPlace;
-    private bool isInCamp;
+    public bool isInPlace;
+    public bool isInCamp;
     protected bool distanceIsMeassured;
     public int experience;
 
@@ -66,78 +66,34 @@ public abstract class Unit : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
-        if (transform.position == workplace)
-        {
-            isInPlace = true;
-        }
-        if (transform.position == campsite)
-        {
-            isInCamp = true;
-        }
-        else
-        {
-            isInPlace = false;
-            isInCamp = false;
-        }
-        
-        if (energy < 1)
-        {
-            isWorking = false;
-        } 
-        else if (isWorking)
-        {
-            Working();
-            if (!startedLoosingEnergy)
-            {
-                StartCoroutine(EnergyDepletion(workEfficency));
-            }
-            if (!startedLearning && isInPlace)
-            {
-                StartCoroutine(gainingExperience(arbitraryRateNumber));
-            }
-        }
-        if (isEating)
-        {
-            if (isInCamp)
-            {
-                distanceIsMeassured = false;
-                if (!startedEating)
-                {
-                    StartCoroutine(EatingInCamp());
-                }
-            }
-            else if (!isInCamp && GameManager.instance.food > 0)
-            {
-                MoveToPlace(campsite);
-            }
-            
-        }
-        if (isResting)
-        {
-            isEating = false;
-            isWorking = false;
-            distanceIsMeassured = false;
-        } else if (isEating)
-            {
-            isWorking = false;
-        }
+
+        LocatingUnit();
+
+        AssesingReadinessToWork();
+
+        EatingMechanism();
+
+        ContradictingSatuses();
+
     }
     IEnumerator EnergyDepletion(float workEfficency)
     {
-            startedLoosingEnergy = true;
-            energy--;
-            yield return new WaitForSeconds(workEfficency);
-            startedLoosingEnergy = false;
+        startedLoosingEnergy = true;
+        energy--;
+        yield return new WaitForSeconds(workEfficency);
+        startedLoosingEnergy = false;
     }
     IEnumerator EatingInCamp()
     {
         startedEating = true;
+
         if (energy < 100 && GameManager.instance.food > 0 && isEating)
         {
             energy += 5;
             GameManager.instance.food--;
             yield return new WaitForSeconds(2.5f);
         }
+
         if (energy < 100 && GameManager.instance.food == 0 && isEating || energy == 100)
         {
             isEating = false;
@@ -202,6 +158,84 @@ public abstract class Unit : MonoBehaviour
             distanceCovered = (Time.time - startingTime) * speed;
             fractionOfDistance = distanceCovered / distanceToPlace;
             transform.position = Vector3.Lerp(transform.position, location, fractionOfDistance);
+        }
+    }
+    private void EatingMechanism()
+    {
+        if (!isEating)
+        {
+            return;
+        }
+
+        if (!isInCamp && GameManager.instance.food > 0)
+        {
+            MoveToPlace(campsite);
+            return;
+        }
+
+        else if (!isInCamp)
+        {
+            return;
+
+        }
+
+        distanceIsMeassured = false;
+        if (!startedEating)
+        {
+            StartCoroutine(EatingInCamp());
+        }
+    }
+    private void LocatingUnit()
+    {
+        if (transform.position == workplace)
+        {
+            isInPlace = true;
+        }
+        else if (transform.position == campsite)
+        {
+            isInCamp = true;
+        }
+        else
+        {
+            isInPlace = false;
+            isInCamp = false;
+        }
+    }
+    private void AssesingReadinessToWork()
+    {
+        if (energy < 1)
+        {
+            isWorking = false;
+            return;
+        }
+        else if (!isWorking)
+        {
+            return;
+        }
+
+        Working();
+
+        if (!startedLoosingEnergy)
+        {
+            StartCoroutine(EnergyDepletion(workEfficency));
+        }
+
+        if (!startedLearning && isInPlace)
+        {
+            StartCoroutine(gainingExperience(arbitraryRateNumber));
+        }
+    }
+    private void ContradictingSatuses()
+    {
+        if (isResting)
+        {
+            isEating = false;
+            isWorking = false;
+            distanceIsMeassured = false;
+        }
+        else if (isEating)
+        {
+            isWorking = false;
         }
     }
 }

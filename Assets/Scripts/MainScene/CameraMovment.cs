@@ -21,35 +21,36 @@ public class CameraMovment : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CameraMovement();
-        CameraRotation();
-        if (!GameManager.instance.isPaused)
+        if (GameManager.instance.isPaused)
         {
-            if (Input.GetKeyDown(KeyCode.M))
+            return;
+        }
+        CameraRotation();
+        CameraMovement();
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            CamReset();
+        }
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            GameManager.instance.showInventoryStatus();
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GameManager.instance.units.Clear();
+            List<Unit> allTheUnits = new List<Unit>();
+            allTheUnits.AddRange(FindObjectsOfType<Unit>(true));
+            foreach (Unit unit in allTheUnits)
             {
-                CamReset();
+                unit.AddToGameManager();
             }
-            if (Input.GetKeyDown(KeyCode.I))
-            {
-                GameManager.instance.showInventoryStatus();
-            }
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                GameManager.instance.units.Clear();
-                List<Unit> allTheUnits = new List<Unit>();
-                allTheUnits.AddRange(FindObjectsOfType<Unit>(true));
-                foreach (Unit unit in allTheUnits)
-                {
-                    unit.AddToGameManager();
-                }
-                GameManager.instance.cameraPos = transform.position;
-                GameManager.instance.cameraRot = transform.rotation;
-                GoToMenu();
-            }
-            if (GameManager.instance.newGameStarted)
-            {
-                GameManager.instance.PrepareStartingUnits();
-            }
+            GameManager.instance.cameraPos = transform.position;
+            GameManager.instance.cameraRot = transform.rotation;
+            GoToMenu();
+        }
+        if (GameManager.instance.newGameStarted)
+        {
+            GameManager.instance.PrepareStartingUnits();
         }
         GamePaused();
         

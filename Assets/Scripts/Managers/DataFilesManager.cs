@@ -41,7 +41,7 @@ public class DataFilesManager
     {
         string fullPath = Path.Combine(directory, fileName);
         SaveData loadedData = null;
-        if (File.Exists(fullPath))
+        if (!File.Exists(fullPath))
         {
             try 
             {

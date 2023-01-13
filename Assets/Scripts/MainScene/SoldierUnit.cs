@@ -8,7 +8,6 @@ public class SoldierUnit : Unit
     private float currentDefense;
     private float startingDefense;
     private float defenceChange;
-    private float defEqualizer;
     private bool isGuarding;
 
     new void Start()
@@ -19,28 +18,32 @@ public class SoldierUnit : Unit
     new void Update()
     {
         base.Update();
-        if (!isWorking)
+        if (isWorking)
         {
-            if (isGuarding)
-            {
-                isGuarding = false;
-                GameManager.instance.shield -= currentDefense;
-            }
+            return;
+        }
+        if (isGuarding)
+        {
+            isGuarding = false;
+            GameManager.instance.shield -= currentDefense;
         }
     }
     public override void Working()
     {
-        if (!startedWorking)
+        if (startedWorking)
         {
-            OnGuard(basicDefense + workEfficency);
+            return;
         }
-        currentDefense = basicDefense + workEfficency;
-        defenceChange = currentDefense - startingDefense;
-        if (defenceChange > 0)
+
+        if (!isInPlace)
         {
-            GameManager.instance.shield -= startingDefense;
-            UpdateProtectionRate(basicDefense + workEfficency);
+            MoveToPlace(workplace);
+            return;
         }
+
+        distanceIsMeassured = false;
+        OnGuard(basicDefense + workEfficency);
+        DefenceRateCalculation();
     }
     private void OnGuard(float protectionRate)
     {
@@ -56,5 +59,17 @@ public class SoldierUnit : Unit
         startingDefense = changeFactor;
         GameManager.instance.shield += changeFactor;
         defenceChange = 0;
+    }
+
+    private void DefenceRateCalculation()
+    {
+        currentDefense = basicDefense + workEfficency;
+        defenceChange = currentDefense - startingDefense;
+
+        if (defenceChange > 0)
+        {
+            GameManager.instance.shield -= startingDefense;
+            UpdateProtectionRate(basicDefense + workEfficency);
+        }
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BasicUnit : Unit
 {
-   
+
     new void Start()
     {
         workBulding = GameObject.Find("Barn");
@@ -12,25 +12,25 @@ public class BasicUnit : Unit
     }
     public override void Working()
     {
-        if (!startedWorking)
+        if (startedWorking)
         {
-            if (isInPlace)
-            {
-                distanceIsMeassured = false;   
-                StartCoroutine(MilkGathering(workEfficency, arbitraryRateNumber));
-            }
-            else
-            {
-                MoveToPlace(workplace);
-            }
+            return;
         }
+        if (!isInPlace)
+        {
+            MoveToPlace(workplace);
+            return;
+        }
+        distanceIsMeassured = false;
+        StartCoroutine(MilkGathering(workEfficency, arbitraryRateNumber));
+
     }
     IEnumerator MilkGathering(float productionRate, float productionSpeed)
     {
         startedWorking = true;
         GameManager.instance.milk += productionRate;
-        yield return new WaitForSeconds(productionSpeed); 
+        yield return new WaitForSeconds(productionSpeed);
         startedWorking = false;
-        
+
     }
 }

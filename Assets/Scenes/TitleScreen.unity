@@ -3886,6 +3886,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 2076573460771343253, guid: 20fb344a6abbe324793fb5df7315d006, type: 3}
+      propertyPath: food
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 2076573460771343258, guid: 20fb344a6abbe324793fb5df7315d006, type: 3}
       propertyPath: m_RootOrder
       value: 4
